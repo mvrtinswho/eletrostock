@@ -80,3 +80,6 @@ Listagens retornam results, count, page e pages; aceitam q e page.
 Materiais aceitam baixo=1 e categoria=<id>. Quantidades são decimais serializados como texto.
 As validações e regras de estoque são compartilhadas com o Admin e o sistema web.
 Não há exclusão de movimentações, e alterações não podem trocar seu material.
+
+## Expo Go demora ao ler o QR Code
+Use **INICIAR_EXPO_TUNEL.bat** na pasta principal. Ele limpa o cache e usa um túnel ngrok para entregar o app, na porta 8082. Feche o projeto antigo no Expo Go e escaneie o novo QR Code. A API continua na porta 8001 e requer conexão pela mesma rede local.
