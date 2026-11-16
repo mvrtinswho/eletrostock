@@ -1,8 +1,12 @@
 # EletroStock
 
-Sistema de estoque de materiais elétricos para uso em usinas e indústrias. O projeto faz parte do trabalho final de Desenvolvimento Web com Python e Django.
+Controle de estoque de materiais elétricos com aplicação web em Django e aplicativo mobile em React Native. Centraliza cadastros, entradas, saídas e alertas de reposição em uma única base de dados.
 
-A aplicação permite consultar os materiais disponíveis, registrar entradas e saídas e acompanhar o que precisa de reposição. O sistema web e o aplicativo para celular usam o mesmo banco de dados.
+Desenvolvido como trabalho final de Desenvolvimento Web com Python e Django, com foco nas regras de movimentação de estoque e na integração entre web e mobile.
+
+**Tecnologias:** Python · Django · SQLite · JavaScript · React Native · Expo
+
+[Executar o projeto](#executar-no-computador) · [Aplicativo mobile](mobile/README.md) · [Arquitetura e decisões técnicas](docs/arquitetura.md) · [Testes](#testes)
 
 ## Funcionalidades
 
@@ -28,6 +32,17 @@ Uma categoria e um fornecedor podem ter vários materiais. Cada material pode te
 O model `ApiToken` guarda as sessões de acesso do aplicativo.
 
 O saldo começa em zero e muda a cada movimentação. O sistema bloqueia saídas e correções que deixem o saldo negativo. Ao editar um lançamento, aplica somente a diferença na quantidade. O material de um lançamento já registrado não pode ser trocado.
+
+## Destaques técnicos
+
+- Validação de saldo nas entradas, saídas e correções de movimentações.
+- Atualização de estoque com transações no banco de dados.
+- Formulários Django compartilhados entre as telas web e a API para validar os cadastros.
+- Acesso web por sessão e API mobile por token com validade de sete dias.
+- Armazenamento do digest do token no servidor e uso do SecureStore no aplicativo.
+- Testes de regras de negócio, páginas, cadastros e autenticação.
+
+Veja os detalhes e as limitações em [Arquitetura e decisões técnicas](docs/arquitetura.md).
 
 ## Tecnologias
 
@@ -113,3 +128,7 @@ O projeto está preparado para demonstração local. O aplicativo depende da API
 O valor do estoque é uma estimativa calculada pelo saldo e pelo custo unitário cadastrado. Não há cálculo de custo médio, emissão de nota fiscal ou controle de múltiplos depósitos.
 
 O arquivo `db.sqlite3`, as dependências e as configurações locais ficam fora do versionamento. Para publicar o servidor na internet, é necessário configurar HTTPS, chave secreta própria e desativar o modo de depuração.
+
+## Autor
+
+[Hiago Martins](https://github.com/mvrtinswho)
