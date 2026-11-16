@@ -1,139 +1,115 @@
-# EletroStock — Web Django + aplicativo Expo Go
-Projeto acadêmico de Desenvolvimento Web com Python e Django, voltado a materiais elétricos usados em usinas e indústrias.
+# EletroStock
 
-## Aplicativo para Expo Go
-O projeto agora inclui o aplicativo nativo em **mobile/** e uma API Django autenticada.
+Sistema de estoque de materiais elétricos para uso em usinas e indústrias. O projeto faz parte do trabalho final de Desenvolvimento Web com Python e Django.
 
-1. Celular e computador devem estar no mesmo Wi-Fi.
-2. Abra **INICIAR_API_MOBILE.bat** e mantenha a janela aberta (porta 8001).
-3. Abra **ABRIR_APP_MOBILE.bat** e leia o QR Code no Expo Go.
-4. Confira o endereço exibido pela API e entre com o mesmo administrador do sistema.
+A aplicação permite consultar os materiais disponíveis, registrar entradas e saídas e acompanhar o que precisa de reposição. O sistema web e o aplicativo para celular usam o mesmo banco de dados.
 
-As telas mobile compartilham os mesmos materiais, fornecedores, categorias e movimentações do sistema web.
-Leia **mobile/README.md** para instalação, conexão e compatibilidade. A nova migration cria apenas a tabela de sessões mobile; os registros existentes são mantidos.
+## Funcionalidades
 
-## Executar no Windows
-1. Instale Python 3.12 ou superior com a opção **Add python.exe to PATH**.
-2. **Extraia o ZIP inteiro**. Não execute os arquivos dentro da pasta compactada.
-3. Abra a pasta EletroStock que contém **manage.py, requirements.txt e INICIAR.bat**.
-4. Dê dois cliques em **INICIAR.bat** e aguarde a instalação.
-5. Na primeira execução, crie seu usuário administrador. A senha não aparece enquanto você digita. Guarde suas credenciais.
-6. Com o terminal aberto, acesse http://127.0.0.1:8000 e entre com essa conta.
-7. Opcional: execute **DADOS_EXEMPLO.bat** para cadastrar materiais fictícios. Atualize a página.
-8. Para encerrar o servidor, pressione Ctrl+C no terminal.
+- Cadastro de materiais, categorias e fornecedores.
+- Registro de entradas e saídas com origem ou destino do material.
+- Consulta de saldo e histórico de movimentações.
+- Pesquisa por nome, código e especificação técnica.
+- Filtro por categoria e por materiais abaixo do estoque mínimo.
+- Painel com resumo do estoque e valor estimado dos materiais.
+- Administração dos cadastros pelo Django Admin.
 
-Não existe senha padrão. Se esquecer a senha: `.venv\Scripts\python.exe manage.py changepassword SEU_USUARIO`.
-O banco SQLite será criado automaticamente. Mantenha uma cópia dele para preservar os registros.
+## Organização dos dados
 
-## Instalação manual
-Execute no terminal **dentro da pasta que contém manage.py**:
+| Model | Finalidade |
+| --- | --- |
+| Categoria | Agrupa os materiais por tipo. |
+| Fornecedor | Guarda os dados do fornecedor principal de cada material. |
+| Material | Registra código, especificação, unidade, localização, custo e estoque mínimo. |
+| Movimentacao | Registra as entradas e saídas de um material. |
+
+Uma categoria e um fornecedor podem ter vários materiais. Cada material pode ter várias movimentações. As relações usam `ForeignKey`.
+
+O model `ApiToken` guarda as sessões de acesso do aplicativo.
+
+O saldo começa em zero e muda a cada movimentação. O sistema bloqueia saídas e correções que deixem o saldo negativo. Ao editar um lançamento, aplica somente a diferença na quantidade. O material de um lançamento já registrado não pode ser trocado.
+
+## Tecnologias
+
+- Python e Django 5.2.
+- SQLite.
+- HTML e CSS.
+- React Native com Expo SDK 58 para o aplicativo.
+
+## Executar no computador
+
+No Windows, use Python 3.12, 3.13 ou 3.14 com a opção **Add python.exe to PATH** marcada.
+
+Abra `INICIAR.bat` na pasta do projeto. Na primeira execução, o script instala as dependências, prepara o banco e solicita a criação de um administrador.
+
+Com o servidor aberto:
+
+- Sistema: [http://127.0.0.1:8000](http://127.0.0.1:8000)
+- Admin: [http://127.0.0.1:8000/admin/](http://127.0.0.1:8000/admin/)
+
+Para preparar pelo terminal, execute na pasta que contém `manage.py`:
+
 ```bat
 python -m venv .venv
 .venv\Scripts\python.exe -m pip install -r requirements.txt
 .venv\Scripts\python.exe manage.py preparar
-.venv\Scripts\python.exe manage.py dados_exemplo
 .venv\Scripts\python.exe manage.py runserver
 ```
-No Linux/macOS, substitua `.venv\Scripts\python.exe` por `.venv/bin/python`.
-Admin: http://127.0.0.1:8000/admin/
-O sistema requer usuário ativo com **status de equipe**; superusuários já têm acesso.
 
-## Requisitos atendidos
-| Requisito | Implementação |
-|---|---|
-| Aplicação MTV | Models em estoque/models.py; Templates em templates/; Views em estoque/views.py |
-| Pelo menos 3 models relacionados | Categoria, Fornecedor, Material e Movimentacao |
-| Administração pelo Django Admin | Todos os quatro models registrados em estoque/admin.py |
-| Listar registros | /materiais/, /categorias/, /fornecedores/ e /movimentacoes/ |
-| Detalhes | /<seção>/<id>/ |
-| Editar registro | /<seção>/<id>/editar/ |
-| Criar registro | /<seção>/novo/ |
-| GitHub | Código preparado com .gitignore e instruções abaixo; publicação deve ser concluída na sua conta |
+O comando `preparar` aplica as migrações e pede a criação de um superusuário caso ainda não exista um. Não há usuário ou senha padrão. Para encerrar o servidor, use Ctrl+C.
 
-## Models e relacionamentos
-- **Categoria → Material:** uma categoria agrupa vários materiais.
-- **Fornecedor → Material:** um fornecedor principal fornece vários materiais.
-- **Material → Movimentacao:** um material possui várias entradas e saídas.
-- Relações usam ForeignKey com PROTECT para impedir exclusão de cadastros em uso.
+### Dados para teste
 
-Material inclui código único, nome, especificação técnica, categoria, fornecedor, unidade, estoque mínimo, localização e custo unitário.
-Movimentação registra tipo, quantidade, origem/destino, observação e data automática.
+O banco não é enviado ao GitHub. Para incluir materiais fictícios, execute `DADOS_EXEMPLO.bat` ou:
 
-## Funcionalidades e regras
-- Dashboard com número de materiais, fornecedores, alertas e valor estimado (saldo × custo atual cadastrado).
-- Pesquisa por nome, código e especificação; filtro por categoria e estoque baixo; paginação.
-- Cadastro, listagem, detalhes e edição para os quatro models.
-- Saldo inicia em zero e é atualizado automaticamente, inclusive pelo Admin.
-- Quantidades fracionárias suportadas (metros e quilogramas).
-- Saídas e correções que deixem o saldo atual negativo são bloqueadas.
-- Editar uma movimentação aplica apenas a diferença ao saldo; não troca o material.
-- Movimentações não têm exclusão nas telas nem no Admin. Correções são feitas por edição.
-- Datas de lançamento são automáticas; o projeto não calcula saldos históricos retroativos.
-- Abaixo do mínimo significa saldo **menor** que o mínimo (igual ao mínimo não gera alerta).
-- CNPJ é validado por formato de 14 números, sem cálculo dos dígitos verificadores.
-- Login, proteção CSRF, escape de conteúdo e acesso restrito a funcionários.
+```bat
+.venv\Scripts\python.exe manage.py dados_exemplo
+```
+
+A carga inclui cabos, disjuntores, contatores, relés, sensores e fusíveis. Executar o comando novamente não duplica os registros já criados.
+
+## Aplicativo no celular
+
+O aplicativo fica na pasta `mobile`. Para usá-lo, instale o Expo Go no celular e Node.js 24 no computador.
+
+1. Conecte o celular e o computador à mesma rede Wi-Fi.
+2. Execute `INICIAR_API_MOBILE.bat` e anote o endereço exibido.
+3. Na pasta `mobile`, execute `npx expo login` e entre na mesma conta Expo usada no celular.
+4. Abra `ABRIR_APP_MOBILE.bat` e leia o QR Code.
+5. Na tela do EletroStock, informe o endereço da API e entre com o usuário criado no Django.
+
+As contas têm funções diferentes: a conta Expo abre o projeto no Expo Go; a conta Django dá acesso aos dados do EletroStock.
+
+Se houver dificuldade ao abrir o QR Code pela rede local, use `INICIAR_EXPO_TUNEL.bat`. A API ainda precisa estar acessível pelo celular. Mais detalhes estão em [mobile/README.md](mobile/README.md).
+
+## Estrutura do projeto
+
+| Pasta ou arquivo | Conteúdo |
+| --- | --- |
+| `config/` | Configurações do Django e rotas principais. |
+| `estoque/models.py` | Models e regras de atualização do saldo. |
+| `estoque/forms.py` | Formulários dos cadastros. |
+| `estoque/views.py` | Views do sistema web. |
+| `estoque/api.py` | API utilizada pelo aplicativo. |
+| `estoque/admin.py` | Configuração do Django Admin. |
+| `templates/` | Páginas de listagem, detalhes, cadastro, edição e login. |
+| `static/` | Estilos do sistema web. |
+| `mobile/` | Aplicativo React Native. |
+
+A parte web segue a arquitetura MTV: os models representam os dados, as views tratam as requisições e os templates exibem as páginas.
 
 ## Testes
+
 ```bat
-.venv\Scripts\python.exe manage.py check
 .venv\Scripts\python.exe manage.py test
-.venv\Scripts\python.exe manage.py makemigrations --check --dry-run
 ```
-Testes cobrem saldos, estoque insuficiente, correções, frações, relacionamentos protegidos, páginas dos quatro cadastros, autenticação, Admin e carga de demonstração.
 
-## Histórico Git incluído
-O arquivo historico.bundle preserva os commits de criação. Para restaurar esse histórico, execute na pasta EletroStock:
+Os testes verificam as regras de estoque, os cadastros, as páginas, o acesso ao Admin e a autenticação da API.
 
-```bat
-git clone historico.bundle ..\EletroStock-versionado
-cd ..\EletroStock-versionado
-```
-Depois configure o remoto e execute git push seguindo a seção abaixo. Você também pode começar um repositório novo com git init.
+## Observações
 
-## Versionamento no GitHub
-Crie um repositório vazio chamado **eletrostock-django** na sua conta do GitHub, sem adicionar README. Na pasta do projeto:
-```bat
-git init
-git branch -M main
-git add .
-git commit -m "Cria sistema EletroStock com Django"
-git remote add origin https://github.com/SEU_USUARIO/eletrostock-django.git
-git push -u origin main
-```
-Substitua SEU_USUARIO pelo seu usuário real. Se a pasta já tiver Git e o commit inicial, pule esses passos e configure apenas o remoto.
-Faça novos commits a cada etapa do seu desenvolvimento. Confira o código publicado no site do GitHub e entregue o link ao professor.
-Não versione o banco, a pasta .venv nem senhas. O ZIP contém apenas código, migrações e documentação, sem contas pré-criadas.
+O projeto está preparado para demonstração local. O aplicativo depende da API em execução e não possui modo offline.
 
-## Estrutura
-- config/: configurações, rotas globais e WSGI.
-- estoque/models.py: estrutura de dados e regras do estoque.
-- estoque/forms.py: formulários baseados nos models.
-- estoque/views.py e urls.py: requisições, consultas, páginas e rotas.
-- estoque/admin.py: administração.
-- estoque/migrations/: estrutura reproduzível do banco.
-- estoque/management/commands/: preparação e dados fictícios.
-- estoque/tests.py: testes automatizados.
-- templates/: layout, login, listagem, detalhes, cadastro e edição.
-- static/style.css: estilos responsivos; fontes do Google são opcionais, com alternativas locais.
+O valor do estoque é uma estimativa calculada pelo saldo e pelo custo unitário cadastrado. Não há cálculo de custo médio, emissão de nota fiscal ou controle de múltiplos depósitos.
 
-## Roteiro de apresentação
-1. Explique o problema: controlar materiais elétricos e evitar falta de peças.
-2. Mostre os quatro models e suas ForeignKeys.
-3. Faça login e apresente o dashboard.
-4. Cadastre categoria e fornecedor; depois, um material com mínimo 5.
-5. Registre entrada de 20 e saída de 3: o saldo fica 17.
-6. Tente retirar 18: o sistema apresenta erro e mantém o saldo.
-7. Edite a saída de 3 para 4: o saldo fica 16.
-8. Mostre detalhes, pesquisa e filtro por estoque baixo.
-9. Abra o Admin e mostre os mesmos cadastros.
-10. Explique MTV: URL chama View, View consulta Model e renderiza Template.
-11. Mostre os testes e o histórico de commits no GitHub.
-
-## Limites e publicação
-Além dos quatro models de domínio, ApiToken armazena hashes e expiração das sessões do aplicativo. A API está em estoque/api.py e os testes adicionais em estoque/test_api.py.
-
-Projeto acadêmico para execução local. Não contempla nota fiscal, compras, múltiplos depósitos, custo médio, trilha de auditoria de edições ou permissões por setor.
-As telas permitem funcionários administrarem todos os registros; utilize superusuário na demonstração.
-As regras de saldo dependem de salvar movimentações pelo método save; não use bulk_create, QuerySet.update/delete nem SQL direto nesses registros.
-Para publicar em produção, configure chave secreta própria, DEBUG=0, hosts, HTTPS, arquivos estáticos e servidor WSGI. Não utilize runserver como servidor de produção.
-Dependência: Django 5.2.19 (LTS), documentado em https://www.djangoproject.com/download/.
+O arquivo `db.sqlite3`, as dependências e as configurações locais ficam fora do versionamento. Para publicar o servidor na internet, é necessário configurar HTTPS, chave secreta própria e desativar o modo de depuração.
