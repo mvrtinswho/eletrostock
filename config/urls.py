@@ -6,5 +6,6 @@ urlpatterns = [
  path("admin/", admin.site.urls),
  path("entrar/", auth.LoginView.as_view(template_name="registration/login.html", authentication_form=AdminAuthenticationForm), name="login"),
  path("sair/", auth.LogoutView.as_view(), name="logout"),
+ path("api/v1/", include("estoque.api_urls")),
  path("", include("estoque.urls")),
 ]

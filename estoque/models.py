@@ -95,3 +95,13 @@ class Movimentacao(models.Model):
         raise ValidationError("Edite o lançamento para corrigir; o histórico não pode ser excluído.")
     def __str__(self):
         return f"{self.get_tipo_display()} · {self.material} · {self.quantidade}"
+
+
+class ApiToken(models.Model):
+    user = models.ForeignKey("auth.User", on_delete=models.CASCADE, related_name="eletrostock_tokens")
+    digest = models.CharField(max_length=64, unique=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    expires_at = models.DateTimeField()
+    class Meta:
+        verbose_name = "sessão mobile"
+        verbose_name_plural = "sessões mobile"
