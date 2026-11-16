@@ -1,0 +1,23 @@
+{
+  "name": "eletrostock-mobile",
+  "version": "1.0.0",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "start": "expo start --go --lan",
+    "android": "expo start --go --android",
+    "export": "expo export --platform android"
+  },
+  "dependencies": {
+    "expo": "~58.0.25",
+    "expo-constants": "~58.0.16",
+    "expo-secure-store": "~58.0.3",
+    "expo-status-bar": "~58.0.5",
+    "react": "19.3.0",
+    "react-native": "0.88.1",
+    "react-native-safe-area-context": "~5.11.1"
+  },
+  "devDependencies": {
+    "prettier": "^3.10.1"
+  }
+}

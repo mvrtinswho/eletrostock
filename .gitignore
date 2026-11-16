@@ -9,3 +9,4 @@ staticfiles/
 .pytest_cache/
 *.bundle
 preview.html
+backups/

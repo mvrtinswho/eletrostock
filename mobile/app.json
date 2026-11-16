@@ -1,0 +1,16 @@
+{
+  "expo": {
+    "name": "EletroStock",
+    "slug": "eletrostock-mobile",
+    "version": "1.0.0",
+    "orientation": "default",
+    "userInterfaceStyle": "light",
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "package": "com.eletrostock.mobile"
+    },
+    "plugins": ["expo-secure-store"]
+  }
+}

@@ -1,5 +1,16 @@
-# EletroStock — Estoque de materiais elétricos
+# EletroStock — Web Django + aplicativo Expo Go
 Projeto acadêmico de Desenvolvimento Web com Python e Django, voltado a materiais elétricos usados em usinas e indústrias.
+
+## Aplicativo para Expo Go
+O projeto agora inclui o aplicativo nativo em **mobile/** e uma API Django autenticada.
+
+1. Celular e computador devem estar no mesmo Wi-Fi.
+2. Abra **INICIAR_API_MOBILE.bat** e mantenha a janela aberta (porta 8001).
+3. Abra **ABRIR_APP_MOBILE.bat** e leia o QR Code no Expo Go.
+4. Confira o endereço exibido pela API e entre com o mesmo administrador do sistema.
+
+As telas mobile compartilham os mesmos materiais, fornecedores, categorias e movimentações do sistema web.
+Leia **mobile/README.md** para instalação, conexão e compatibilidade. A nova migration cria apenas a tabela de sessões mobile; os registros existentes são mantidos.
 
 ## Executar no Windows
 1. Instale Python 3.12 ou superior com a opção **Add python.exe to PATH**.
@@ -119,6 +130,8 @@ Não versione o banco, a pasta .venv nem senhas. O ZIP contém apenas código, m
 11. Mostre os testes e o histórico de commits no GitHub.
 
 ## Limites e publicação
+Além dos quatro models de domínio, ApiToken armazena hashes e expiração das sessões do aplicativo. A API está em estoque/api.py e os testes adicionais em estoque/test_api.py.
+
 Projeto acadêmico para execução local. Não contempla nota fiscal, compras, múltiplos depósitos, custo médio, trilha de auditoria de edições ou permissões por setor.
 As telas permitem funcionários administrarem todos os registros; utilize superusuário na demonstração.
 As regras de saldo dependem de salvar movimentações pelo método save; não use bulk_create, QuerySet.update/delete nem SQL direto nesses registros.
