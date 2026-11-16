@@ -4,7 +4,24 @@ O arquivo [README do perfil](perfil/README.md) está preparado para ser usado no
 
 ## Bio sugerida
 
-Desenvolvimento web e mobile | Python, Django e React Native | Projetos e trabalhos acadêmicos
+Desenvolvedor Web e Full Stack | ADS · 4º período | Java, PHP, Python e SQL | Estágio e freelancer
+
+## Dados públicos
+
+- Nome: Hiago Martins.
+- Localização: Uberlândia, MG.
+- Formação: Análise e Desenvolvimento de Sistemas, 4º período.
+- E-mail: hiagomartins528@gmail.com.
+- Idiomas: português fluente e inglês básico.
+- Tema do README: degradê roxo e preto.
+
+## Ativar a apresentação no perfil
+
+1. Crie um repositório público chamado `mvrtinswho` na conta `mvrtinswho`.
+2. Na raiz desse repositório, crie `README.md` com o conteúdo de [perfil/README.md](perfil/README.md).
+3. Salve o arquivo com um commit. O GitHub exibirá o README na página principal do perfil.
+
+O arquivo desta pasta é a versão preparada; ele só aparece no perfil depois de ser publicado no repositório especial acima.
 
 ## Descrição do EletroStock
 
