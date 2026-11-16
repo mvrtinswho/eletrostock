@@ -1,0 +1,11 @@
+{% load static %}<!DOCTYPE html>
+<html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>{% block title %}EletroStock{% endblock %} · EletroStock</title><link rel="stylesheet" href="{% static 'style.css' %}"></head>
+<body><aside class="sidebar"><a class="brand" href="{% url 'dashboard' %}"><span class="bolt">ϟ</span> EletroStock</a><div class="overline">GESTÃO INDUSTRIAL</div><nav>
+<a href="{% url 'dashboard' %}" {% if not section %}class="active"{% endif %}>◫ &nbsp; Visão geral</a>
+<a href="{% url 'listing' 'materiais' %}" {% if section == 'materiais' %}class="active"{% endif %}>▦ &nbsp; Materiais</a>
+<a href="{% url 'listing' 'movimentacoes' %}" {% if section == 'movimentacoes' %}class="active"{% endif %}>⇄ &nbsp; Movimentações</a>
+<a href="{% url 'listing' 'categorias' %}" {% if section == 'categorias' %}class="active"{% endif %}>◈ &nbsp; Categorias</a>
+<a href="{% url 'listing' 'fornecedores' %}" {% if section == 'fornecedores' %}class="active"{% endif %}>▤ &nbsp; Fornecedores</a>
+<a href="{% url 'admin:index' %}">⚙ &nbsp; Administração</a></nav><div class="sidebar-foot">Materiais elétricos<br><strong>Usinas & indústrias</strong></div></aside>
+<div class="workspace"><header class="topbar"><span>CONTROLE DE ESTOQUE <b>/</b> {% block crumb %}Painel{% endblock %}</span><div>{{ request.user.username }} <form method="post" action="{% url 'logout' %}">{% csrf_token %}<button class="text-button">Sair</button></form></div></header>
+<main>{% for message in messages %}<div class="notice">{{ message }}</div>{% endfor %}{% block content %}{% endblock %}</main><footer>EletroStock · Gestão de materiais elétricos · Projeto acadêmico Django</footer></div></body></html>
