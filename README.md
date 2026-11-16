@@ -70,6 +70,15 @@ Movimentação registra tipo, quantidade, origem/destino, observação e data au
 ```
 Testes cobrem saldos, estoque insuficiente, correções, frações, relacionamentos protegidos, páginas dos quatro cadastros, autenticação, Admin e carga de demonstração.
 
+## Histórico Git incluído
+O arquivo historico.bundle preserva os commits de criação. Para restaurar esse histórico, execute na pasta EletroStock:
+
+```bat
+git clone historico.bundle ..\EletroStock-versionado
+cd ..\EletroStock-versionado
+```
+Depois configure o remoto e execute git push seguindo a seção abaixo. Você também pode começar um repositório novo com git init.
+
 ## Versionamento no GitHub
 Crie um repositório vazio chamado **eletrostock-django** na sua conta do GitHub, sem adicionar README. Na pasta do projeto:
 ```bat

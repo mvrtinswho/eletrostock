@@ -7,3 +7,5 @@ db.sqlite3-*
 staticfiles/
 .coverage
 .pytest_cache/
+*.bundle
+preview.html
