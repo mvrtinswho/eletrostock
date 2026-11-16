@@ -6,7 +6,29 @@ Desenvolvido como trabalho final de Desenvolvimento Web com Python e Django, com
 
 **Tecnologias:** Python · Django · SQLite · JavaScript · React Native · Expo
 
-[Documentação completa](docs/documentacao-projeto.md) · [Executar o projeto](#executar-no-computador) · [Aplicativo mobile](mobile/README.md) · [Arquitetura e decisões técnicas](docs/arquitetura.md) · [Testes](#testes)
+[Telas do sistema](#telas-do-sistema) · [Documentação completa](docs/documentacao-projeto.md) · [Executar o projeto](#executar-no-computador) · [Aplicativo mobile](mobile/README.md) · [Arquitetura e decisões técnicas](docs/arquitetura.md) · [Testes](#testes)
+
+## Telas do sistema
+
+Capturas da aplicação web com dados de demonstração.
+
+### Dashboard
+
+Visão geral com materiais cadastrados, alertas de reposição, valor estimado em estoque e últimas movimentações.
+
+![Dashboard do EletroStock com indicadores de estoque, alertas de reposição e movimentações recentes](<image(4).png>)
+
+### Materiais
+
+Consulta do catálogo com pesquisa, filtro por categoria, identificação de estoque baixo e acesso aos detalhes e à edição dos materiais.
+
+![Página de materiais do EletroStock com pesquisa, filtros, saldos e situação do estoque](<image(5).png>)
+
+### Movimentações
+
+Histórico de entradas e saídas com material, quantidade, origem ou destino e data de cada lançamento.
+
+![Histórico de movimentações do EletroStock com entradas, saídas, quantidades e referências](<image(6).png>)
 
 ## Funcionalidades
 
