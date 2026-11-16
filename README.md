@@ -6,7 +6,7 @@ Desenvolvido como trabalho final de Desenvolvimento Web com Python e Django, com
 
 **Tecnologias:** Python · Django · SQLite · JavaScript · React Native · Expo
 
-[Executar o projeto](#executar-no-computador) · [Aplicativo mobile](mobile/README.md) · [Arquitetura e decisões técnicas](docs/arquitetura.md) · [Testes](#testes)
+[Documentação completa](docs/documentacao-projeto.md) · [Executar o projeto](#executar-no-computador) · [Aplicativo mobile](mobile/README.md) · [Arquitetura e decisões técnicas](docs/arquitetura.md) · [Testes](#testes)
 
 ## Funcionalidades
 
